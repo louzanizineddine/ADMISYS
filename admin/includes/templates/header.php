@@ -16,5 +16,4 @@
 <!-- body open heare and closed in footer.php -->
 <body>
     <header>
-        this a header
     </header>

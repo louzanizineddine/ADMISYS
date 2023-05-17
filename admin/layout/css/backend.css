@@ -1,0 +1,34 @@
+/* start the login form */
+
+body {
+    background-color: #f3f3f3;
+
+}
+
+.login h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #888;
+}
+
+.login input:focus::-webkit-input-placeholder { color:transparent; }
+
+.login {
+    width: 400px;
+    margin: 150px  auto 0 auto;
+}
+
+.login input {
+    margin-bottom: 20px;
+}
+
+.login .form-control {
+    background-color: #EAEAEA;
+}
+
+.login .btn {
+    background-color: #008dde;
+    width: 100%;
+}
+
+/* end the login form */
