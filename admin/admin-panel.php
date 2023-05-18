@@ -5,6 +5,9 @@ error_reporting(E_ALL);
 session_start();
 if (isset($_SESSION['username'])) {
     include 'init.php';
+
+    // include the footer
+    include $tpl . 'footer.php';
 }else {
 //    echo 'you are not authorized to view this page';
     header('Location: index.php');

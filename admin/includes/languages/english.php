@@ -2,8 +2,15 @@
 
     function lang($statement) {
         static $language = Array(
-            
-            'GREETING' => 'Welcome',
+            // admin page
+            'HOME'          => 'home',
+            'STUDENTS'      => 'students',
+            'TEACHERS'      => 'teachers',
+            'INSCRIPTIONS'  => 'inscriptions',
+            'NEWS'          => 'news',
+            'LOGOUT'        => 'logout',
+            'SETTINGS'      => 'settings',
+            'EDIT-PROFILE'  => 'edit profile',
         );
 
 

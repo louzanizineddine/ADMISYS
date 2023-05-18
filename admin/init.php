@@ -9,7 +9,6 @@ include 'connect.php'; // include connect.php file
     include $lang . 'english.php';
     include $tpl . 'header.php';
 
-   if (!isset($Navbar)) {
-       include $tpl . 'navbar.php';
-   }
+    // INCLUDE NAVBAR ON ONLY PAGES THAT HAVE NO $NO_NAVBAR VARIABLE
+   if (!isset($Navbar)) { include $tpl . 'navbar.php'; }
 
