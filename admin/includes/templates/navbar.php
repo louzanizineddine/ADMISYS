@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><?php echo  lang("STUDENTS")?></a>
+                    <a class="nav-link" href="students.php"><?php echo  lang("STUDENTS")?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><?php echo  lang("TEACHERS")?></a>
@@ -30,7 +30,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> <?php echo lang("EDIT-PROFILE")?></a>
+                            <a class="nav-link" href="admin-edit-profile.php">
+                                <?php echo lang("EDIT-PROFILE")?>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"> <?php echo lang("SETTINGS")?></a>

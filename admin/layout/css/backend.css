@@ -32,3 +32,17 @@ body {
 }
 
 /* end the login form */
+
+/* start the edit profile admin */
+
+.edit-profile-admin h2 {
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    color: #888;
+}
+.edit-profile-admin label {
+    font-weight: bolder;
+    font-size: larger;
+    color: #888;
+}
+.edit-profile-admin input:focus::-webkit-input-placeholder { color:transparent; }
