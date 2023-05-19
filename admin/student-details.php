@@ -53,11 +53,17 @@ if (isset($_SESSION['username'])) {
                     </tbody>
                 </table>
                 <div class="text-center">
-                    <a href="edit_student.php?student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-primary">Edit</a>
-                    <a href="delete_student.php?student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-danger">Delete</a>
+                    <a href="manage-student.php?action=edit&student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-primary">
+                        Edit
+                    </a>
+                    <a href="manage-student.php?action=delete&student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-danger">
+                        Delete
+                    </a>
                 </div>
             </div>
         </div>
+
+
     </div>
 
 <?php
