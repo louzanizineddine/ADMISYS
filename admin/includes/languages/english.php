@@ -24,6 +24,8 @@
             'TEACHER-DETAILS'=> 'teacher details',
             'SUBJECT'       => 'subject',
             'ACTION'        => 'action',
+            'PHONE'         => 'Phone',
+            'STATUS REGISTRATION'=> 'statut inscription'
         );
 
 
