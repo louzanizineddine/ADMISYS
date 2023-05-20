@@ -21,6 +21,9 @@
             'BIRTHDATE'     => 'birth date',
             'STUDENT-NUMBER'=> 'student number',
             'STUDENT-DETAILS'=> 'student details',
+            'TEACHER-DETAILS'=> 'teacher details',
+            'SUBJECT'       => 'subject',
+            'ACTION'        => 'action',
         );
 
 

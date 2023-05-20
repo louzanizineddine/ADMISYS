@@ -46,3 +46,26 @@ body {
     color: #888;
 }
 .edit-profile-admin input:focus::-webkit-input-placeholder { color:transparent; }
+
+.article-title {
+    font-size: xx-large;
+    font-weight: bolder;
+    color: #888;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.article-description {
+    font-size: larger;
+    color: #555;
+}
+
+/* MANAGE NEWS PAGE */
+#description {
+    height: 100px;
+    resize: none;
+}
+
+.db-text{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

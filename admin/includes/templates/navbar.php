@@ -10,13 +10,13 @@
                     <a class="nav-link" href="students.php"><?php echo  lang("STUDENTS")?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><?php echo  lang("TEACHERS")?></a>
+                    <a class="nav-link" href="teachers.php"><?php echo  lang("TEACHERS")?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><?php echo  lang("INSCRIPTIONS")?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><?php echo  lang("NEWS")?></a>
+                    <a class="nav-link" href="news.php"><?php echo  lang("NEWS")?></a>
                 </li>
             </ul>
             <form class="d-flex justify-content-center">

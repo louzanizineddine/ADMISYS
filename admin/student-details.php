@@ -52,7 +52,7 @@ if (isset($_SESSION['username'])) {
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-center">
+                <div class="mt-3 text-center">
                     <a href="manage-student.php?action=edit&student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-primary">
                         Edit
                     </a>

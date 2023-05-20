@@ -20,7 +20,7 @@
                     unset($_SESSION['update_success']); // Clear the success message from the session
                 }
                 ?>
-                <table class="table table-striped">
+                <table class="table table-success table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>

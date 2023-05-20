@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 17, 2023 at 04:11 PM
--- Server version: 8.0.33-0ubuntu0.22.04.1
--- PHP Version: 8.1.2-1ubuntu2.11
+-- Host: localhost
+-- Generation Time: May 20, 2023 at 06:31 PM
+-- Server version: 10.11.2-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,12 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `administrateurs` (
-  `id_admin` int NOT NULL,
+  `id_admin` int(11) NOT NULL,
+  `username` varchar(32) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `administrateurs`
+--
+
+INSERT INTO `administrateurs` (`id_admin`, `username`, `nom`, `prenom`, `email`, `password`) VALUES
+(4, 'soufyane', 'soufyane', 'soufyane', 'soufyane@gmail.com', '8a57928bb316f6f74ba7f219521de9d74f6182ca'),
+(5, 'zineddine', 'louzanilouani', 'zaindai', 'zineddine.louzani@yahoo.com', '9e192870d8b3bc21821ceaa82d40fb013fdc50ef');
 
 -- --------------------------------------------------------
 
@@ -42,10 +51,10 @@ CREATE TABLE `administrateurs` (
 --
 
 CREATE TABLE `Documents` (
-  `id_doc` int NOT NULL,
+  `id_doc` int(11) NOT NULL,
   `nom_doc` varchar(255) NOT NULL,
   `chemin_doc_serveur` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -54,13 +63,20 @@ CREATE TABLE `Documents` (
 --
 
 CREATE TABLE `Enseignants` (
-  `id_enseignant` int NOT NULL,
+  `id_enseignant` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `matiere_enseignee` varchar(255) NOT NULL,
-  `photo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `photo` blob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Enseignants`
+--
+
+INSERT INTO `Enseignants` (`id_enseignant`, `nom`, `prenom`, `email`, `matiere_enseignee`, `photo`) VALUES
+(1, 'bousl', 'sidali', 'bousla@estin.dz', 'Analyse 1 2 3 4', NULL);
 
 -- --------------------------------------------------------
 
@@ -69,15 +85,15 @@ CREATE TABLE `Enseignants` (
 --
 
 CREATE TABLE `Etudiants` (
-  `id_etudiant` int NOT NULL,
+  `id_etudiant` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `date_naissance` date NOT NULL,
   `num_etudiant` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `photo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `photo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -86,12 +102,12 @@ CREATE TABLE `Etudiants` (
 --
 
 CREATE TABLE `FAQ` (
-  `id_FAQ` int NOT NULL,
+  `id_FAQ` int(11) NOT NULL,
   `question` text NOT NULL,
   `reponse` text NOT NULL,
   `auteur_reponse` varchar(50) NOT NULL,
   `date_pub_reponse` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -100,13 +116,13 @@ CREATE TABLE `FAQ` (
 --
 
 CREATE TABLE `Inscriptions` (
-  `id_inscription` int NOT NULL,
+  `id_inscription` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `cv` varchar(255) NOT NULL,
   `statut_demande` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,24 +131,31 @@ CREATE TABLE `Inscriptions` (
 --
 
 CREATE TABLE `matiere` (
-  `id_matiere` int NOT NULL,
+  `id_matiere` int(11) NOT NULL,
   `intitule` varchar(100) NOT NULL,
-  `nombre_heures` int NOT NULL,
-  `prof_responsable` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nombre_heures` int(11) NOT NULL,
+  `prof_responsable` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Nouveautés`
+-- Table structure for table `Nouveautes`
 --
 
-CREATE TABLE `Nouveautés` (
-  `id_nouveautes` int NOT NULL,
+CREATE TABLE `Nouveautes` (
+  `id` int(11) NOT NULL,
   `titre` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `date_publication` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `description` text NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Nouveautes`
+--
+
+INSERT INTO `Nouveautes` (`id`, `titre`, `description`, `date`) VALUES
+(2, 'ZINEDDINE FIRST ARTICLE', '<p>of coursre this is jusa taestalksjfd </p>', '2023-05-20');
 
 --
 -- Indexes for dumped tables
@@ -143,7 +166,8 @@ CREATE TABLE `Nouveautés` (
 --
 ALTER TABLE `administrateurs`
   ADD PRIMARY KEY (`id_admin`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `Documents`
@@ -185,10 +209,10 @@ ALTER TABLE `matiere`
   ADD PRIMARY KEY (`id_matiere`);
 
 --
--- Indexes for table `Nouveautés`
+-- Indexes for table `Nouveautes`
 --
-ALTER TABLE `Nouveautés`
-  ADD PRIMARY KEY (`id_nouveautes`);
+ALTER TABLE `Nouveautes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -198,49 +222,49 @@ ALTER TABLE `Nouveautés`
 -- AUTO_INCREMENT for table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  MODIFY `id_admin` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Documents`
 --
 ALTER TABLE `Documents`
-  MODIFY `id_doc` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Enseignants`
 --
 ALTER TABLE `Enseignants`
-  MODIFY `id_enseignant` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_enseignant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Etudiants`
 --
 ALTER TABLE `Etudiants`
-  MODIFY `id_etudiant` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_etudiant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `FAQ`
 --
 ALTER TABLE `FAQ`
-  MODIFY `id_FAQ` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_FAQ` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Inscriptions`
 --
 ALTER TABLE `Inscriptions`
-  MODIFY `id_inscription` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inscription` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `matiere`
 --
 ALTER TABLE `matiere`
-  MODIFY `id_matiere` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_matiere` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Nouveautés`
+-- AUTO_INCREMENT for table `Nouveautes`
 --
-ALTER TABLE `Nouveautés`
-  MODIFY `id_nouveautes` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Nouveautes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

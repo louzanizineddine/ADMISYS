@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['action'] == 'delete') {
     $stmt = $connection->prepare("DELETE FROM Enseignants WHERE id_enseignant= ?");
     $stmt->execute(array($teacher_id));
     $_SESSION['update_success'] = 'Update successful!';
-    header('Location: students.php');
+    header('Location: teachers.php');
     ob_end_flush();
 }
 ?>
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-name'])
     $teacher_name = $_POST['name'];
     $stmt = $connection->prepare("UPDATE Enseignants SET nom = ? WHERE id_enseignant = ?");
     $stmt->execute(array($teacher_name, $teacher_id));
-    header('Location: students.php');
+    header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
 
     ob_end_flush();
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-surname
     $teacher_surname = $_POST['surname'];
     $stmt = $connection->prepare("UPDATE Enseignants SET prenom = ? WHERE id_enseignant = ?");
     $stmt->execute(array($teacher_surname, $teacher_id));
-    header('Location: students.php');
+    header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
 
     ob_end_flush();
@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-birthda
     $teacher_birthdate = $_POST['birthdate'];
     $stmt = $connection->prepare("UPDATE Etudiants SET date_naissance = ? WHERE id_enseignant = ?");
     $stmt->execute(array($teacher_birthdate, $teacher_id));
-    header('Location: students.php');
+    header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
 
     ob_end_flush();
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-email']
     $teacher_email = $_POST['email'];
     $stmt = $connection->prepare("UPDATE Etudiants SET email = ? WHERE id_enseignant = ?");
     $stmt->execute(array($teacher_email, $teacher_id));
-    header('Location: students.php');
+    header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
     ob_end_flush();
 }
