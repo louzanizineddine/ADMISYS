@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 17, 2023 at 04:11 PM
+-- Generation Time: May 20, 2023 at 03:00 PM
 -- Server version: 8.0.33-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -29,11 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `administrateurs` (
   `id_admin` int NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `username` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `administrateurs`
+--
+
+INSERT INTO `administrateurs` (`id_admin`, `username`, `nom`, `prenom`, `email`, `password`) VALUES
+(4, 'soufyane', 'soufyane', 'soufyane', 'soufyane@gmail.com', '8a57928bb316f6f74ba7f219521de9d74f6182ca'),
+(5, 'zineddine', 'louzanilouani', 'zaindai', 'zineddine.louzani@yahoo.com', '9e192870d8b3bc21821ceaa82d40fb013fdc50ef');
 
 -- --------------------------------------------------------
 
@@ -43,9 +52,9 @@ CREATE TABLE `administrateurs` (
 
 CREATE TABLE `Documents` (
   `id_doc` int NOT NULL,
-  `nom_doc` varchar(255) NOT NULL,
-  `chemin_doc_serveur` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nom_doc` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `chemin_doc_serveur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,12 +64,19 @@ CREATE TABLE `Documents` (
 
 CREATE TABLE `Enseignants` (
   `id_enseignant` int NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `matiere_enseignee` varchar(255) NOT NULL,
-  `photo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `matiere_enseignee` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `photo` blob
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Enseignants`
+--
+
+INSERT INTO `Enseignants` (`id_enseignant`, `nom`, `prenom`, `email`, `matiere_enseignee`, `photo`) VALUES
+(1, 'bousl', 'sidali', 'bousla@estin.dz', 'Analyse 1 2 3 4', NULL);
 
 -- --------------------------------------------------------
 
@@ -70,14 +86,14 @@ CREATE TABLE `Enseignants` (
 
 CREATE TABLE `Etudiants` (
   `id_etudiant` int NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
+  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `num_etudiant` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `photo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `num_etudiant` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -87,11 +103,11 @@ CREATE TABLE `Etudiants` (
 
 CREATE TABLE `FAQ` (
   `id_FAQ` int NOT NULL,
-  `question` text NOT NULL,
-  `reponse` text NOT NULL,
-  `auteur_reponse` varchar(50) NOT NULL,
+  `question` text COLLATE utf8mb4_general_ci NOT NULL,
+  `reponse` text COLLATE utf8mb4_general_ci NOT NULL,
+  `auteur_reponse` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_pub_reponse` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -101,12 +117,13 @@ CREATE TABLE `FAQ` (
 
 CREATE TABLE `Inscriptions` (
   `id_inscription` int NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `cv` varchar(255) NOT NULL,
-  `statut_demande` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `cv` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `statut_demande` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -116,10 +133,10 @@ CREATE TABLE `Inscriptions` (
 
 CREATE TABLE `matiere` (
   `id_matiere` int NOT NULL,
-  `intitule` varchar(100) NOT NULL,
+  `intitule` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `nombre_heures` int NOT NULL,
   `prof_responsable` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -129,10 +146,10 @@ CREATE TABLE `matiere` (
 
 CREATE TABLE `Nouveautés` (
   `id_nouveautes` int NOT NULL,
-  `titre` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `titre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `date_publication` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -143,7 +160,8 @@ CREATE TABLE `Nouveautés` (
 --
 ALTER TABLE `administrateurs`
   ADD PRIMARY KEY (`id_admin`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `Documents`
@@ -198,7 +216,7 @@ ALTER TABLE `Nouveautés`
 -- AUTO_INCREMENT for table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  MODIFY `id_admin` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_admin` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Documents`
@@ -210,13 +228,13 @@ ALTER TABLE `Documents`
 -- AUTO_INCREMENT for table `Enseignants`
 --
 ALTER TABLE `Enseignants`
-  MODIFY `id_enseignant` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_enseignant` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Etudiants`
 --
 ALTER TABLE `Etudiants`
-  MODIFY `id_etudiant` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_etudiant` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `FAQ`
