@@ -38,44 +38,48 @@ if (isset($_SESSION['username'])) {
     if(isset($_GET['action']) && $_GET['action'] == 'edit') {
         ?>
 
-
         <div class="container">
             <h2 class="text-center mt-5">Update Student Information</h2>
-            <form action="update_student.php" method="POST" class="mt-4 border border-2 rounded border-primary p-4 bg-light">
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="POST" class="">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="first_name" class="form-label">Name</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="first_name" name="name" value="<?php  echo $student['nom']; ?>">
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" name="update-student-name" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
+            </form>
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="surname" class="form-label">Surname</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="first_name" name="surname" value="<?php  echo $student['prenom']; ?>">
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" name="update-student-surname" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
+            </form>
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="birthdate" class="form-label">birthdate</label>
                         <div class="input-group">
                             <input type="date" class="form-control" id="birth-date" name="birthdate" value="<?php  echo $student['date_naissance']; ?>">
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" name="update-student-birthdate" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
-
+            </form>
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="POST">
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
                             <input type="email" class="form-control" id="email" name="email" value="<?php  echo $student['email']; ?>">
-                            <button class="btn btn-primary" type="button">Update</button>
+                            <button class="btn btn-primary" name="update-student-email"  type="submit">Update</button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +92,6 @@ if (isset($_SESSION['username'])) {
         <?php
     }
 
-
     // Include the footer
     include $tpl . 'footer.php';
 } else {
@@ -98,7 +101,9 @@ if (isset($_SESSION['username'])) {
 }
 ?>
 
+
 <?php
+// HANDLE THE DELETE ACTION
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['action'] == 'delete') {
         $student_id = $_GET['student_id'];
         $stmt = $connection->prepare("DELETE FROM Etudiants WHERE id_etudiant = ?");
@@ -107,4 +112,58 @@ if (isset($_SESSION['username'])) {
         ob_end_flush();
     }
 ?>
+
+<?php
+// HANDLE THE UPDATE ACTION
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-name'])) {
+        $student_id = $_GET['student_id'];
+        $student_name = $_POST['name'];
+        $stmt = $connection->prepare("UPDATE Etudiants SET nom = ? WHERE id_etudiant = ?");
+        $stmt->execute(array($student_name, $student_id));
+        header('Location: students.php');
+        ob_end_flush();
+    }
+?>
+
+<?php
+// HANDLE THE UPDATE ACTION
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-surname'])) {
+        $student_id = $_GET['student_id'];
+        $student_surname = $_POST['surname'];
+        $stmt = $connection->prepare("UPDATE Etudiants SET prenom = ? WHERE id_etudiant = ?");
+        $stmt->execute(array($student_surname, $student_id));
+        header('Location: students.php');
+        ob_end_flush();
+    }
+?>
+
+<?php
+// HANDLE THE UPDATE ACTION
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-birthdate'])) {
+        $student_id = $_GET['student_id'];
+        $student_birthdate = $_POST['birthdate'];
+        $stmt = $connection->prepare("UPDATE Etudiants SET date_naissance = ? WHERE id_etudiant = ?");
+        $stmt->execute(array($student_birthdate, $student_id));
+        header('Location: students.php');
+        ob_end_flush();
+    }
+?>
+
+<?php
+// HANDLE THE UPDATE ACTION
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-email'])) {
+        $student_id = $_GET['student_id'];
+        $student_email = $_POST['email'];
+        $stmt = $connection->prepare("UPDATE Etudiants SET email = ? WHERE id_etudiant = ?");
+        $stmt->execute(array($student_email, $student_id));
+        header('Location: students.php');
+        ob_end_flush();
+    }
+?>
+
+
 
