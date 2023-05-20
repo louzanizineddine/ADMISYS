@@ -108,6 +108,7 @@ if (isset($_SESSION['username'])) {
         $student_id = $_GET['student_id'];
         $stmt = $connection->prepare("DELETE FROM Etudiants WHERE id_etudiant = ?");
         $stmt->execute(array($student_id));
+        $_SESSION['update_success'] = 'Update successful!';
         header('Location: students.php');
         ob_end_flush();
     }
@@ -122,6 +123,8 @@ if (isset($_SESSION['username'])) {
         $stmt = $connection->prepare("UPDATE Etudiants SET nom = ? WHERE id_etudiant = ?");
         $stmt->execute(array($student_name, $student_id));
         header('Location: students.php');
+        $_SESSION['update_success'] = 'Update successful!';
+
         ob_end_flush();
     }
 ?>
@@ -135,6 +138,8 @@ if (isset($_SESSION['username'])) {
         $stmt = $connection->prepare("UPDATE Etudiants SET prenom = ? WHERE id_etudiant = ?");
         $stmt->execute(array($student_surname, $student_id));
         header('Location: students.php');
+        $_SESSION['update_success'] = 'Update successful!';
+
         ob_end_flush();
     }
 ?>
@@ -148,6 +153,8 @@ if (isset($_SESSION['username'])) {
         $stmt = $connection->prepare("UPDATE Etudiants SET date_naissance = ? WHERE id_etudiant = ?");
         $stmt->execute(array($student_birthdate, $student_id));
         header('Location: students.php');
+        $_SESSION['update_success'] = 'Update successful!';
+
         ob_end_flush();
     }
 ?>
@@ -161,6 +168,7 @@ if (isset($_SESSION['username'])) {
         $stmt = $connection->prepare("UPDATE Etudiants SET email = ? WHERE id_etudiant = ?");
         $stmt->execute(array($student_email, $student_id));
         header('Location: students.php');
+        $_SESSION['update_success'] = 'Update successful!';
         ob_end_flush();
     }
 ?>

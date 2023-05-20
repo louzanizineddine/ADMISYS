@@ -13,6 +13,13 @@
 
             <div class="container">
                 <h2 class="mt-5">Students List</h2>
+                <?php
+                // Check if the update is successful and show a notification
+                if (isset($_SESSION['update_success'])) {
+                    echo '<div class="alert alert-success">' . $_SESSION['update_success'] . '</div>';
+                    unset($_SESSION['update_success']); // Clear the success message from the session
+                }
+                ?>
                 <table class="table table-striped">
                     <thead>
                     <tr>
