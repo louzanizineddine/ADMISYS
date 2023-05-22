@@ -38,8 +38,8 @@ if (isset($_SESSION['username'])) {
                             <td><?php echo $inscription['phone']; ?></td>
                         </tr>
                         <tr>
-                            <th><?php echo lang("COURSE") ?></th>
-                            <td><?php echo $inscription['course']; ?></td>
+                            <th><?php echo lang("STATUS REGISTRATION") ?></th>
+                            <td><?php echo $inscription['statut inscription']; ?></td>
                         </tr>
                     </tbody>
                 </table>
