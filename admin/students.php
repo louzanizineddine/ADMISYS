@@ -28,20 +28,21 @@
                         <th><?php echo lang("SURNAME")?></th>
                         <th><?php echo lang("BIRTHDATE")?></th>
                         <th><?php echo lang("STUDENT-NUMBER")?></th>
-                        <th><?php echo lang("STUDENT-NUMBER")?></th>
+                        <th><?php echo lang("EMAIL")?></th>
+                        <th>More info</th>
 
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($students as $student) { ?>
                         <tr>
-                            <td><?php echo $student['id_etudiant']; ?></td>
+                            <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['nom']; ?></td>
                             <td><?php echo $student['prenom']; ?></td>
                             <td><?php echo $student['date_naissance']; ?></td>
                             <td><?php echo $student['num_etudiant']; ?></td>
                             <td><?php echo $student['email']; ?></td>
-                            <td><a href="student-details.php?student_id=<?php echo $student['id_etudiant']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
+                            <td><a href="student-details.php?student_id=<?php echo $student['id']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
                         </tr>
                     <?php } ?>
                     </tbody>

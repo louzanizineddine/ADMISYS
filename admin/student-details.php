@@ -10,7 +10,7 @@ if (isset($_SESSION['username'])) {
     $id = $_GET['student_id'];
 
     // Retrieve student details from the database
-    $stmt = $connection->query("SELECT * FROM Etudiants WHERE id_etudiant = $id");
+    $stmt = $connection->query("SELECT * FROM Etudiants WHERE id = $id");
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
@@ -18,7 +18,11 @@ if (isset($_SESSION['username'])) {
         <h2 class="text-center mt-5 mb-5"><?php echo lang("STUDENT-DETAILS") ?></h2>
         <div class="row text-center mb-5">
             <div class="col-md-12">
-                <img src="layout/images/pic.jpeg" class="img-fluid rounded" alt="Profile Picture">
+            <?php
+                $photoData = base64_encode($student['photo']);
+                echo '<img src="data:image/base64,' . $photoData . '">';
+            ?>
+
             </div>
         </div>
 
@@ -28,7 +32,7 @@ if (isset($_SESSION['username'])) {
                     <tbody>
                         <tr>
                             <th>ID</th>
-                            <td><?php echo $student['id_etudiant']; ?></td>
+                            <td><?php echo $student['id']; ?></td>
                         </tr>
                         <tr>
                             <th><?php echo lang("NAME") ?></th>
@@ -53,10 +57,10 @@ if (isset($_SESSION['username'])) {
                     </tbody>
                 </table>
                 <div class="mt-3 text-center">
-                    <a href="manage-student.php?action=edit&student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-primary">
+                    <a href="manage-student.php?action=edit&student_id=<?php echo $student['id']; ?>" class="btn btn-primary">
                         Edit
                     </a>
-                    <a href="manage-student.php?action=delete&student_id=<?php echo $student['id_etudiant']; ?>" class="btn btn-danger">
+                    <a href="manage-student.php?action=delete&student_id=<?php echo $student['id']; ?>" class="btn btn-danger">
                         Delete
                     </a>
                 </div>

@@ -23,14 +23,14 @@
 
 
         // we check if the user already exist in  db
-        $stmt = $connection->prepare("SELECT id_admin , username , password from administrateurs where username = ? and password = ?");
+        $stmt = $connection->prepare("SELECT id, username , password from administrateurs where username = ? and password = ?");
         $stmt->execute(array($username, $hashedpass));
         $record= $stmt->fetch();
         $result_count = $stmt->rowCount();
 
         if ($result_count > 0) {
             $_SESSION['username'] = $username;
-            $_SESSION['id_admin'] = $record['id_admin'];
+            $_SESSION['id_admin'] = $record['id'];
 //            print_r($_SESSION);
             header('Location: admin-panel.php');
             exit();
