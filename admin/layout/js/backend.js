@@ -29,7 +29,7 @@ saveButton.addEventListener('click', (e) => {
         .then(result => {
             console.log(result); // Output the response from the server
             // redirect to the article page
-            window.location.href = "news.php";
+            // window.location.href = "news.php";
         })
         .catch(error => {
             console.error('Error:', error);

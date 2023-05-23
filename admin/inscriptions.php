@@ -37,9 +37,9 @@
                     <td><?php echo $inscription['nom']; ?></td>
                     <td><?php echo $inscription['prenom']; ?></td>
                     <td><?php echo $inscription['email']; ?></td>
-                    <td><?php echo $inscription['num_etudiant']; ?></td>
-                    <td><?php echo $inscription['statut_inscription']; ?></td>
-                    <td><a href="inscription-details.php?student_id=<?php echo $inscription['id_inscription']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
+<!--                    <td>--><?php //echo $inscription['num_etudiant']; ?><!--</td>-->
+<!--                    <td>--><?php //echo $inscription['statut_inscription']; ?><!--</td>-->
+                    <td><a href="inscription-details.php?id=<?php echo $inscription['id_inscription']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
                 </tr>
             <?php } ?>
         </tbody>
