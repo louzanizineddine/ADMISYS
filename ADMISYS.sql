@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 22, 2023 at 09:16 PM
+-- Generation Time: May 23, 2023 at 03:52 PM
 -- Server version: 8.0.33-0ubuntu0.22.04.2
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `administrateurs` (
-  `id_admin` int NOT NULL,
+  `id` int NOT NULL,
   `username` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
   `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `administrateurs` (
 -- Dumping data for table `administrateurs`
 --
 
-INSERT INTO `administrateurs` (`id_admin`, `username`, `nom`, `prenom`, `email`, `password`) VALUES
+INSERT INTO `administrateurs` (`id`, `username`, `nom`, `prenom`, `email`, `password`) VALUES
 (5, 'zineddine', 'louzanilouani', 'zaindai', 'zineddine.louzani@yahoo.com', '9e192870d8b3bc21821ceaa82d40fb013fdc50ef'),
 (6, 'Soufyane', 'Soufyane', 'Soufyane', 'soufyane@gmail.com', 'e727d1464ae12436e899a726da5b2f11d8381b26');
 
@@ -51,9 +51,13 @@ INSERT INTO `administrateurs` (`id_admin`, `username`, `nom`, `prenom`, `email`,
 --
 
 CREATE TABLE `Documents` (
-  `id_doc` int NOT NULL,
-  `nom_doc` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `chemin_doc_serveur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `id` int NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mimetype` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `data` mediumblob NOT NULL,
+  `id_etudiant` int DEFAULT NULL,
+  `id_enseignant` int DEFAULT NULL,
+  `id_inscription` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,20 +67,19 @@ CREATE TABLE `Documents` (
 --
 
 CREATE TABLE `Enseignants` (
-  `id_enseignant` int NOT NULL,
+  `id` int NOT NULL,
   `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `matiere_enseignee` int NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `date_naissance` date NOT NULL,
+  `lieu_naissance` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `nationalite` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_matiere` int NOT NULL,
+  `adresse` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `telephone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_doc` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `Enseignants`
---
-
-INSERT INTO `Enseignants` (`id_enseignant`, `nom`, `prenom`, `email`, `matiere_enseignee`, `photo`) VALUES
-(1, 'bousl', 'sidali', 'bousla@estin.dz', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -85,12 +88,12 @@ INSERT INTO `Enseignants` (`id_enseignant`, `nom`, `prenom`, `email`, `matiere_e
 --
 
 CREATE TABLE `Etudiants` (
-  `id_etudiant` int NOT NULL,
+  `id` int NOT NULL,
   `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `prenom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_naissance` date NOT NULL,
-  `num_etudiant` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `num_etudiant` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `telephone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `photo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
@@ -103,10 +106,9 @@ CREATE TABLE `Etudiants` (
 --
 
 CREATE TABLE `FAQ` (
-  `id_FAQ` int NOT NULL,
+  `id` int NOT NULL,
   `question` text COLLATE utf8mb4_general_ci NOT NULL,
   `reponse` text COLLATE utf8mb4_general_ci NOT NULL,
-  `auteur_reponse` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_pub_reponse` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -118,9 +120,15 @@ CREATE TABLE `FAQ` (
 
 CREATE TABLE `Inscriptions` (
   `id_inscription` int NOT NULL,
-  `id_etudiant` int NOT NULL,
-  `statut_demande` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `date` date NOT NULL
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date_naissance` date NOT NULL,
+  `sexe` enum('F','M') COLLATE utf8mb4_general_ci NOT NULL,
+  `telephone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `statut_demande` enum('envoyee','en cours de traitement','en pause','acceptee','refusee','en attente') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date` date NOT NULL,
+  `message_admin` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -130,7 +138,7 @@ CREATE TABLE `Inscriptions` (
 --
 
 CREATE TABLE `matiere` (
-  `id_matiere` int NOT NULL,
+  `id` int NOT NULL,
   `intitule` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `nombre_heures` int NOT NULL,
   `prof_responsable` int NOT NULL
@@ -157,7 +165,7 @@ CREATE TABLE `Nouveautés` (
 -- Indexes for table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  ADD PRIMARY KEY (`id_admin`),
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `username` (`username`);
 
@@ -165,40 +173,49 @@ ALTER TABLE `administrateurs`
 -- Indexes for table `Documents`
 --
 ALTER TABLE `Documents`
-  ADD PRIMARY KEY (`id_doc`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ibfk_6` (`id_etudiant`),
+  ADD KEY `ibfk_7` (`id_enseignant`),
+  ADD KEY `ibfk_8` (`id_inscription`);
 
 --
 -- Indexes for table `Enseignants`
 --
 ALTER TABLE `Enseignants`
-  ADD PRIMARY KEY (`id_enseignant`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `telephone` (`telephone`),
+  ADD KEY `ibfk_4` (`id_doc`),
+  ADD KEY `ibfk_5` (`id_matiere`);
 
 --
 -- Indexes for table `Etudiants`
 --
 ALTER TABLE `Etudiants`
-  ADD PRIMARY KEY (`id_etudiant`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `num_etudiant` (`num_etudiant`),
+  ADD UNIQUE KEY `telephone` (`telephone`);
 
 --
 -- Indexes for table `FAQ`
 --
 ALTER TABLE `FAQ`
-  ADD PRIMARY KEY (`id_FAQ`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `Inscriptions`
 --
 ALTER TABLE `Inscriptions`
   ADD PRIMARY KEY (`id_inscription`),
-  ADD KEY `ibfk_1` (`id_etudiant`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `telephone` (`telephone`);
 
 --
 -- Indexes for table `matiere`
 --
 ALTER TABLE `matiere`
-  ADD PRIMARY KEY (`id_matiere`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `ibfk_2` (`prof_responsable`);
 
 --
@@ -215,31 +232,31 @@ ALTER TABLE `Nouveautés`
 -- AUTO_INCREMENT for table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  MODIFY `id_admin` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `Documents`
 --
 ALTER TABLE `Documents`
-  MODIFY `id_doc` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Enseignants`
 --
 ALTER TABLE `Enseignants`
-  MODIFY `id_enseignant` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Etudiants`
 --
 ALTER TABLE `Etudiants`
-  MODIFY `id_etudiant` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `FAQ`
 --
 ALTER TABLE `FAQ`
-  MODIFY `id_FAQ` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Inscriptions`
@@ -251,7 +268,7 @@ ALTER TABLE `Inscriptions`
 -- AUTO_INCREMENT for table `matiere`
 --
 ALTER TABLE `matiere`
-  MODIFY `id_matiere` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Nouveautés`
@@ -264,16 +281,25 @@ ALTER TABLE `Nouveautés`
 --
 
 --
--- Constraints for table `Inscriptions`
+-- Constraints for table `Documents`
 --
-ALTER TABLE `Inscriptions`
-  ADD CONSTRAINT `ibfk_1` FOREIGN KEY (`id_etudiant`) REFERENCES `Etudiants` (`id_etudiant`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `Documents`
+  ADD CONSTRAINT `ibfk_6` FOREIGN KEY (`id_etudiant`) REFERENCES `Etudiants` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `ibfk_7` FOREIGN KEY (`id_enseignant`) REFERENCES `Enseignants` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `ibfk_8` FOREIGN KEY (`id_inscription`) REFERENCES `Inscriptions` (`id_inscription`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `Enseignants`
+--
+ALTER TABLE `Enseignants`
+  ADD CONSTRAINT `ibfk_4` FOREIGN KEY (`id_doc`) REFERENCES `Documents` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `ibfk_5` FOREIGN KEY (`id_matiere`) REFERENCES `matiere` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `matiere`
 --
 ALTER TABLE `matiere`
-  ADD CONSTRAINT `ibfk_2` FOREIGN KEY (`prof_responsable`) REFERENCES `Enseignants` (`id_enseignant`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `ibfk_2` FOREIGN KEY (`prof_responsable`) REFERENCES `Enseignants` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
