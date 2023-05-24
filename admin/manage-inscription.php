@@ -9,82 +9,136 @@ if (isset($_SESSION['username'])) {
     $pageTitle = 'Manage inscription';
     include 'init.php';
 
-    // handle the action DELETE
-    if (isset($_GET['action']) && $_GET['action'] == 'delete') {
-        $id_inscription = $_GET['id_inscription'];
-        $stmt = $connection->prepare("DELETE FROM Inscriptions WHERE id_inscription = ?");
-        $stmt->execute(array($inscription_id));
-        $_SESSION['update_success'] = 'inscription deleted successfully!';
-        header('Location: inscriptions.php');
-        ob_end_flush();
-        exit();
-    }
+    //  Check if the get request id is numeric & get the integer value of it
+    $id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+    // get the state from the get request
+    $state = isset($_GET['state']) ? $_GET['state'] : 'default';
 
-    // handle the action EDIT
-    if (isset($_GET['action']) && $_GET['action'] == 'edit') {
-        $id_inscription = $_GET['id_inscription'];
-        $stmt = $connection->prepare("SELECT * FROM Inscriptions WHERE id_inscription = ?");
-        $stmt->execute(array($inscription_id));
+    if ($state == 'new') {
+//        print_r($_GET);
+        $stmt = $connection->prepare("SELECT * FROM Inscriptions WHERE id = ?");
+        $stmt->execute(array($id));
         $inscription = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$inscription) {
-            echo 'inscription not found.';
-            exit();
-        }
+        $stmt_documents = $connection->prepare("SELECT * FROM Documents WHERE id_inscription = ?");
+        $stmt_documents->execute(array($id));
+        $documents = $stmt_documents->fetchAll();
+
+
+        $stmt_docs = $connection->query("SELECT * FROM Documents where id_inscription = $id");
+        $docs = $stmt_docs->fetchAll(PDO::FETCH_ASSOC);
+//        print_r($documents);
+
 ?>
 
         <div class="container">
-            <h2 class="text-center mt-5">Update inscription Information</h2>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                <div class="row mb-3">
-                    <div class="col-md-8">
-                        <label for="name" class="form-label">Name</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="name" name="name" value="<?php echo $inscription['name']; ?>">
-                            <button class="btn btn-primary" name="update-inscription-name" type="submit">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                <div class="row mb-3">
-                    <div class="col-md-8">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control" id="email" name="email" value="<?php echo $inscription['email']; ?>">
-                            <button class="btn btn-primary" name="update-inscription-email" type="submit">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                <div class="row mb-3">
-                    <div class="col-md-8">
-                        <label for="phone" class="form-label">Phone</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $inscription['phone']; ?>">
-                            <button class="btn btn-primary" name="update-inscription-phone" type="submit">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                <div class="row mb-3">
-                    <div class="col-md-8">
-                        <label for="course" class="form-label">Course</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="course
-                            " name="course" value="<?php echo $inscription['course']; ?>">
-                            <button class="btn btn-primary" name="update-inscription-course" type="submit">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+        <h2 class="mt-5">Inscription N:<?php echo $inscription['id']?></h2>
+        <hr>
+        <div class="row text-center m-3">
+            <div class="col-md-12">
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($inscription['photo']); ?>"
+                     alt="student photo" width="300" height="300">
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-success p-4">
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td><?php echo $inscription['id']; ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo lang("NAME") ?></th>
+                        <td><?php echo $inscription['nom']; ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo lang("SURNAME") ?></th>
+                        <td><?php echo $inscription['prenom']; ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php echo lang("BIRTHDATE") ?></th>
+                        <td><?php echo $inscription['date_naissance']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><?php echo $inscription['email']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td><?php echo $inscription['telephone']; ?></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row mt-3 text-center">
+                    <div class="col-md-6">
+                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                            <button class="btn btn-primary btn-lg p-3 m-3" type="submit" name="application-to-process"
+                                    value="<?php echo $inscription['id']; ?>">
+                                <i class="fa-solid fa-forward-step"></i> Consider
+                            </button>
+                        </form>
+
+                    </div>
+                    <div class="col-md-6">
+                        <form action="<?php $_SERVER['PHP_SELF']?>" method="post" name="application-to-reject">
+                            <button class="btn btn-danger btn-lg p-3 m-3" type="submit" name="application-to-reject"
+                                    value="<?php echo $inscription['id']; ?>">
+                                <i class="fa-sharp fa-solid fa-xmark"></i> Reject
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2 class="text-center mt-5 ">Documents</h2>
+            <hr>
+            <?php if (empty($docs)) { ?>
+                <div class="alert alert-danger text-center" role="alert">
+                    No documents uploaded yet.
+                </div>
+            <?php } ?>
+            <?php foreach ($docs as $doc) { ?>
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header"><h3><?php echo $doc['nom']?></h3></div>
+                <div class="card-body">
+                    <h5>type of document <?php echo $doc['mimetype']?></h5>
+                    <h6>uploaded on <?php echo $doc['date']?></h6>
+                    <a href="documents.php?document_id=<?php echo $doc['id']?> " target="_blank" class="btn bg-white p-2">Open</a>
+                </div>
+                <?php } ?>
+            </div>
+
+        </div>
+
 
 <?php
     }
 
+
+    if ($state == 'in-process') {
+        echo 'in process';
+    }
+
+    if ($state == 'accepted') {
+        echo 'accepted';
+    }
+
+    if ($state == 'in-pause') {
+        echo 'in pause';
+    }
+
+    if ($state == 'on-hold') {
+        echo 'in pause';
+    }
+
+    if ($state == 'rejected') {
+        echo 'rejected';
+    }
     // Include the footer
     include $tpl . 'footer.php';
 } else {
@@ -92,50 +146,30 @@ if (isset($_SESSION['username'])) {
     header('Location: index.php');
     exit();
 }
-
-// HANDLE THE UPDATE ACTION
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_inscription = $_GET['id_inscription'];
-
-    if (isset($_POST['update-inscription-name'])) {
-        $name = $_POST['name'];
-        $stmt = $connection->prepare("UPDATE inscriptions SET name = ? WHERE id = ?");
-        $stmt->execute(array($name, $inscription_id));
-        $_SESSION['update_success'] = 'Name updated successfully!';
-        header('Location: inscriptions.php');
-        ob_end_flush();
-        exit();
-    }
-
-    if (isset($_POST['update-inscription-email'])) {
-        $email = $_POST['email'];
-        $stmt = $connection->prepare("UPDATE inscriptions SET email = ? WHERE id = ?");
-        $stmt->execute(array($email, $inscription_id));
-        $_SESSION['update_success'] = 'Email updated successfully!';
-        header('Location: inscriptions.php');
-        ob_end_flush();
-        exit();
-    }
-
-    if (isset($_POST['update-inscription-phone'])) {
-        $phone = $_POST['phone'];
-        $stmt = $connection->prepare("UPDATE inscriptions SET phone = ? WHERE id = ?");
-        $stmt->execute(array($phone, $inscription_id));
-        $_SESSION['update_success'] = 'Phone updated successfully!';
-        header('Location: inscriptions.php');
-        ob_end_flush();
-        exit();
-    }
-
-    if (isset($_POST['update-inscription-course'])) {
-        $course = $_POST['course'];
-        $stmt = $connection->prepare("UPDATE inscriptions SET course = ? WHERE id = ?");
-        $stmt->execute(array($course, $inscription_id));
-        $_SESSION['update_success'] = 'Course updated successfully!';
-        header('Location: inscriptions.php');
-        ob_end_flush();
-        exit();
-    }
-}
 ?>
+
+<?php
+    // check if the ther is a post request from the form with name application-to-process
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['application-to-process'])) {
+        print_r($_POST);
+        $stmt = $connection->prepare("UPDATE Inscriptions SET statut_demande = 'en cours de traitement' WHERE id = ?");
+        $stmt->execute(array($_POST['application-to-process']));
+        print_r($_POST);
+        header('Location: inscriptions.php');
+        exit();
+    }
+?>
+
+<?php
+// check if the ther is a post request from the form with name application-to-process
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['application-to-reject'])) {
+        print_r($_POST);
+        $stmt = $connection->prepare("UPDATE Inscriptions SET statut_demande = 'refusee' WHERE id = ?");
+        $stmt->execute(array($_POST['application-to-reject']));
+        print_r($_POST);
+        header('Location: inscriptions.php');
+        exit();
+    }
+?>
+
+

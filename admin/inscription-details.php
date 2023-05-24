@@ -7,10 +7,10 @@ session_start();
 if (isset($_SESSION['username'])) {
     $pageTitle = 'inscription Details';
     include 'init.php';
-    $id = $_GET['inscription_id'];
+    $id = $_GET['id'];
 
     // Retrieve inscription details from the database
-    $stmt = $connection->query("SELECT * FROM Inscriptions WHERE id_inscription = $id");
+    $stmt = $connection->query("SELECT * FROM Inscriptions WHERE id = $id");
     $inscription = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
@@ -19,7 +19,7 @@ if (isset($_SESSION['username'])) {
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-striped">
+                <table class="table table-success">
                     <tbody>
                         <tr>
                             <th>ID</th>
@@ -27,7 +27,11 @@ if (isset($_SESSION['username'])) {
                         </tr>
                         <tr>
                             <th><?php echo lang("NAME") ?></th>
-                            <td><?php echo $inscription['name']; ?></td>
+                            <td><?php echo $inscription['nom']; ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo lang("SURNAME") ?></th>
+                            <td><?php echo $inscription['prenom']; ?></td>
                         </tr>
                         <tr>
                             <th>Email</th>
@@ -35,7 +39,7 @@ if (isset($_SESSION['username'])) {
                         </tr>
                         <tr>
                             <th><?php echo lang("PHONE") ?></th>
-                            <td><?php echo $inscription['phone']; ?></td>
+                            <td><?php echo $inscription['telephone']; ?></td>
                         </tr>
                         <tr>
                             <th><?php echo lang("STATUS REGISTRATION") ?></th>

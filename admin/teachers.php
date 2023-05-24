@@ -28,7 +28,6 @@ if (isset($_SESSION['username'])) {
                 <th><?php echo lang("NAME")?></th>
                 <th><?php echo lang("SURNAME")?></th>
                 <th><?php echo lang("EMAIL")?></th>
-                <th><?php echo lang("SUBJECT")?></th>
                 <th><?php echo lang("ACTION")?></th>
 
             </tr>
@@ -36,12 +35,11 @@ if (isset($_SESSION['username'])) {
             <tbody>
             <?php foreach ($teachers as $teacher) { ?>
                 <tr>
-                    <td><?php echo $teacher['id_enseignant']; ?></td>
+                    <td><?php echo $teacher['id']; ?></td>
                     <td><?php echo $teacher['nom']; ?></td>
                     <td><?php echo $teacher['prenom']; ?></td>
-                    <td><?php echo $teacher['matiere_enseignee']; ?></td>
                     <td><?php echo $teacher['email']; ?></td>
-                    <td><a href="teacher-details.php?teacher_id=<?php echo $teacher['id_enseignant']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
+                    <td><a href="teacher-details.php?teacher_id=<?php echo $teacher['id']?>" class="btn btn-success"><i class="fa-solid fa-info"></i></a></td>
                 </tr>
             <?php } ?>
             </tbody>

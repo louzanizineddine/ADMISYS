@@ -8,11 +8,13 @@
         include 'init.php';
         $stmt = $connection->query("SELECT * FROM Etudiants");
         $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 //        print_r($students);
 ?>
 
             <div class="container">
                 <h2 class="mt-5">Students List</h2>
+                <hr>
                 <?php
                 // Check if the update is successful and show a notification
                 if (isset($_SESSION['update_success'])) {

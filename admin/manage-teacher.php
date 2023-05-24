@@ -8,10 +8,10 @@ session_start();
 if (isset($_SESSION['username'])) {
     $pageTitle = 'Teacher Details';
     include 'init.php';
-    print_r($_GET);
+//    print_r($_GET);
 
     $teacher_id = isset($_GET['teacher_id']) && is_numeric($_GET['teacher_id']) ? intval($_GET['teacher_id']) : 0;
-    $stmt = $connection->prepare("SELECT * FROM Enseignants WHERE id_enseignant = ?");
+    $stmt = $connection->prepare("SELECT * FROM Enseignants WHERE id = ?");
     $stmt->execute(array($teacher_id));
     $teacher = $stmt->fetch(PDO::FETCH_ASSOC);
 //    print_r($student);
@@ -24,10 +24,12 @@ if (isset($_SESSION['username'])) {
             <h2 class="text-center mt-5">Delete Student</h2>
             <div class="row text-center">
                 <form action="<?php $_SERVER['PHP_SELF']?>" method="post" name="delete-from">
-                    <input type="hidden" name="student_id" value="<?php echo $teacher['id_enseignant']; ?>">
+                    <input type="hidden" name="teacher_id" value="<?php echo $teacher['id']; ?>">
                     <p class="bold">Are you sure you want to delete this teacher?</p>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a href="teachers.php" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-lg btn-danger">
+                        <i class="fa fa-trash"></i> Delete</button>
+                    <a href="teachers.php" class="btn btn-lg btn-secondary">
+                        <i class="fa-sharp fa-solid fa-xmark"></i> Cancel</a>
                 </form>
             </div>
         </div>
@@ -39,7 +41,8 @@ if (isset($_SESSION['username'])) {
         ?>
 
         <div class="container">
-            <h2 class="text-center mt-5">Update Teacher Information</h2>
+            <h2 class="text-center mt-5">Update <?php echo $teacher['nom']?>'s Informations</h2>
+            <hr>
             <form action="<?php $_SERVER['PHP_SELF']?>" method="POST" class="">
                 <div class="row mb-3">
                     <div class="col-md-8">
@@ -69,6 +72,31 @@ if (isset($_SESSION['username'])) {
                         <div class="input-group">
                             <input type="email" class="form-control" id="email" name="email" value="<?php  echo $teacher['email']; ?>">
                             <button class="btn btn-primary" name="update-teacher-email"  type="submit">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <label for="phone-number" class="form-label">phone number</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="phone-number" name="phone-number" value="<?php  echo $teacher['telephone']; ?>">
+                        <button class="btn btn-primary" name="update-phone-number" type="submit">Update</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+
+
+            <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label for="birthdate" class="form-label">birthdate</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="birth-date" name="birthdate" value="<?php  echo $teacher['date_naissance']; ?>">
+                            <button class="btn btn-primary" name="update-birthdate" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-name'])
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-surname'])) {
     $teacher_id = $_GET['teacher_id'];
     $teacher_surname = $_POST['surname'];
-    $stmt = $connection->prepare("UPDATE Enseignants SET prenom = ? WHERE id_enseignant = ?");
+    $stmt = $connection->prepare("UPDATE Enseignants SET prenom = ? WHERE id = ?");
     $stmt->execute(array($teacher_surname, $teacher_id));
     header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
@@ -136,10 +164,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-surname
 <?php
 // HANDLE THE UPDATE ACTION
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-birthdate'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-birthdate'])) {
     $teacher_id = $_GET['teacher_id'];
     $teacher_birthdate = $_POST['birthdate'];
-    $stmt = $connection->prepare("UPDATE Etudiants SET date_naissance = ? WHERE id_enseignant = ?");
+    $stmt = $connection->prepare("UPDATE Enseignants SET date_naissance = ? WHERE id = ?");
     $stmt->execute(array($teacher_birthdate, $teacher_id));
     header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
@@ -154,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-student-birthda
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-email'])) {
     $teacher_id = $_GET['teacher_id'];
     $teacher_email = $_POST['email'];
-    $stmt = $connection->prepare("UPDATE Etudiants SET email = ? WHERE id_enseignant = ?");
+    $stmt = $connection->prepare("UPDATE Enseignants SET email = ? WHERE id= ?");
     $stmt->execute(array($teacher_email, $teacher_id));
     header('Location: teachers.php');
     $_SESSION['update_success'] = 'Update successful!';
@@ -162,6 +190,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-teacher-email']
 }
 ?>
 
+
+<?php
+// HANDLE THE UPDATE ACTION
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-phone-number'])) {
+    $teacher_id = $_GET['teacher_id'];
+    $teacher_number = $_POST['phone-number'];
+    $stmt = $connection->prepare("UPDATE Enseignants SET telephone = ? WHERE id= ?");
+    $stmt->execute(array($teacher_number, $teacher_id));
+    header('Location: teachers.php');
+    $_SESSION['update_success'] = 'Update successful!';
+    ob_end_flush();
+}
+?>
 
 
 

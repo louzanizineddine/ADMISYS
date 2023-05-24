@@ -24,10 +24,12 @@ if (isset($_SESSION['username'])) {
             <h2 class="text-center mt-5">Delete Student</h2>
             <div class="row text-center">
                 <form action="<?php $_SERVER['PHP_SELF']?>" method="post" name="delete-from">
-                    <input type="hidden" name="student_id" value="<?php echo $student['id_etudiant']; ?>">
+                    <input type="hidden" name="student_id" value="<?php echo $student['id']; ?>">
                     <p class="bold">Are you sure you want to delete this student?</p>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a href="students.php" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-lg btn-danger">
+                        <i class="fa fa-trash"></i> Delete</button>
+                    <a href="students.php" class="btn btn-lg btn-secondary">
+                        <i class="fa-sharp fa-solid fa-xmark"></i> Cancel</a>
                 </form>
             </div>
         </div>
@@ -39,7 +41,8 @@ if (isset($_SESSION['username'])) {
         ?>
 
         <div class="container">
-            <h2 class="text-center mt-5">Update Student Information</h2>
+            <h2 class="text-center mt-5">Update <?php echo $student['nom']?>'s Informations</h2>
+            <hr>
             <form action="<?php $_SERVER['PHP_SELF']?>" method="POST" class="">
                 <div class="row mb-3">
                     <div class="col-md-8">
